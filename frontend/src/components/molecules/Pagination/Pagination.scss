@@ -1,0 +1,47 @@
+/* ===============================
+   PAGINATION
+=============================== */
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; // 10px -> 1rem
+  margin: 1rem 0;
+}
+
+.paginate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem; // 50px -> 5rem
+  height: 5rem;
+  padding: 0.5rem; // 5px -> 0.5rem
+  border-radius: 50%;
+  color: $primary-color;
+  background-color: $bg-color;
+  border: 0.2rem solid $primary-color; // 2px -> 0.2rem
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $bg-color;
+    background-color: $primary-color;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+
+@include tablet {
+  .paginate-btn {
+    width: 4rem; // 40px -> 4rem
+    height: 4rem;
+  }
+}

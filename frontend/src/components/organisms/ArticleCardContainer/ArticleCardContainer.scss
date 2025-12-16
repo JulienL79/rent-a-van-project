@@ -1,0 +1,16 @@
+/* ===============================
+   ARTICLE CARD CONTAINER
+=============================== */
+
+.article-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 5%; // padding-top/bottom 4rem, left/right 5%
+  margin: 0 auto;
+
+  > h2 {
+    width: 100%;
+  }
+}

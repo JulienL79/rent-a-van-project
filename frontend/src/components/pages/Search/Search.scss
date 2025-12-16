@@ -1,0 +1,87 @@
+@use "sass:color";
+
+.search-page {
+  .content {
+    width: 100%;
+
+    @include tablet {
+      width: 68%;
+    }
+
+    @include desktop {
+      width: 70%;
+    }
+  }
+
+  h2 {
+    color: inherit;
+  }
+
+  .card-list {
+    margin-top: 2rem;
+    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-filter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+
+    a {
+      cursor: pointer;
+      font-weight: bold;
+
+      &.active,
+      &:hover {
+        color: $primary-color;
+        text-shadow:
+          0px 0px 10px rgba(
+        color.channel($primary-color, "red"),
+        color.channel($primary-color, "green"),
+        color.channel($primary-color, "blue"), 0.4),
+          0px 0px 20px rgba(
+        color.channel($primary-color, "red"),
+        color.channel($primary-color, "green"),
+        color.channel($primary-color, "blue"), 0.3),
+          0px 0px 30px rgba(
+        color.channel($primary-color, "red"),
+        color.channel($primary-color, "green"),
+        color.channel($primary-color, "blue"), 0.1);
+      }
+
+      &:hover::after {
+        display: none;
+      }
+    }
+
+    @include tablet {
+      gap: 3rem;
+    }
+  }
+
+  .extra-title {
+    margin-top: -1.5rem;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+
+    @include desktop {
+      flex-direction: row;
+    }
+  }
+
+}
+
+.page.search-page {
+    @include tablet {
+    justify-content: space-between;
+  }
+}

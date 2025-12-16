@@ -1,0 +1,25 @@
+/* ===============================
+   SKELETON LOADING
+=============================== */
+
+
+// Couleur du skeleton (modifiable via variable)
+$skeleton-bg-color: $disabled-color;
+
+.skeleton {
+  background-color: $skeleton-bg-color;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+// Keyframes
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

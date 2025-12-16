@@ -1,0 +1,37 @@
+# ====================================================================
+# ÉTAPE 1 : Build (Compilation de l'application React)
+# ====================================================================
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY frontend/package*.json ./frontend/
+COPY shared/package*.json ./shared/
+
+RUN npm install
+
+COPY frontend ./frontend
+COPY shared ./shared
+
+WORKDIR /app/frontend
+
+RUN npm run build
+
+# ====================================================================
+# ÉTAPE 2 : La diffusion via Nginx
+# ====================================================================
+
+FROM nginx:alpine AS production
+
+# Copier la configuration Nginx
+COPY infrastructure/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Supprimer les fichiers d'exemple de Nginx (meilleure pratique)
+RUN rm -rf /usr/share/nginx/html/*
+
+# vers le dossier de service de Nginx (/usr/share/nginx/html)
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Démarre Nginx
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,36 @@
+# ====================================================================
+# ÉTAPE 1 : Build (Compiler le code TypeScript)
+# ====================================================================
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./ 
+COPY backend/package*.json ./backend/
+COPY shared/package*.json ./shared/
+
+RUN npm install
+
+COPY backend ./backend
+COPY shared ./shared
+
+RUN npm run build --workspace shared
+RUN npm run build --workspace backend
+
+# ====================================================================
+# ÉTAPE 2 : Production (Image d'exécution légère)
+# ====================================================================
+FROM node:22-alpine AS production
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/backend/dist ./backend/dist
+COPY --from=builder /app/backend/src/migrations ./backend/src/migrations
+COPY --from=builder /app/shared/dist ./node_modules/@rent-a-van/shared
+COPY --from=builder /app/backend/package*.json ./backend/
+
+EXPOSE 3000

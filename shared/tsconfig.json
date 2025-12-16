@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "target": "es2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["es2021", "dom"],
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["validators/**/*.ts", "types/**/*.ts", "services/**/*.ts", "utils/**/*.ts"]
+}
+

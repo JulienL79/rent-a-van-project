@@ -1,0 +1,30 @@
+/* ===============================
+   FOOTER
+=============================== */
+@use '@style/_variables.scss' as *;
+
+.app-footer {
+  background: $text-color;
+  color: $bg-color;
+  padding: 2rem 5%;
+  text-align: center;
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 2rem;
+    margin: 3rem auto 0 auto;
+
+    a::after {
+      background-color: $bg-color;
+    }
+
+    @include tablet {
+      flex-direction: row;
+      gap: 4rem;
+    }
+  }
+}

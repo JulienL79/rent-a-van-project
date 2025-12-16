@@ -1,0 +1,66 @@
+/* ===============================
+   BUTTONS
+=============================== */
+
+
+.button-app {
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  font-family: inherit;
+  width: 100%;
+
+  &.inline-button {
+    width: auto;
+  }
+
+  &.back-button {
+    margin-bottom: 2rem;
+  }
+
+  &.primary-button {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: $primary-color-darked;
+    }
+  }
+
+  &.secondary-button {
+    background-color: $secondary-color;
+
+    &:hover {
+      background-color: $secondary-color-darked;
+    }
+  }
+
+  &.danger-button {
+    background-color: $danger-color;
+
+    &:hover {
+      background-color: $danger-color-darked;
+    }
+  }
+
+  &.disabled-button {
+    background-color: $disabled-color;
+    pointer-events: none;
+
+    &:hover {
+      background-color: $disabled-color;
+      cursor: default;
+    }
+  }
+
+  &.form-button {
+    margin-top: 1rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: auto;
+  }
+}

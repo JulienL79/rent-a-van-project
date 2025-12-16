@@ -1,0 +1,23 @@
+
+
+.social-links {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.social-links a {
+    display: inline-block;
+    margin-right: 1.5rem;
+    color: $primary-color;
+    font-size: 3rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: $secondary-color;
+}
+
+.social-links a::after {
+    display: none;
+}

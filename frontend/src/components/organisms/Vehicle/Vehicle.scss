@@ -1,0 +1,50 @@
+.vehicle-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .vehicle-section {
+    border-top: 0.1rem solid $active-color; // #ccc -> $active-color
+    padding-top: 1rem;
+  }
+
+  .vehicle-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 0.5rem;
+      background-color: $bg-color-secondary; // #f0f0f0 -> variable
+    }
+
+    .feature-icon {
+      width: 2rem; // 20px -> 2rem
+      height: 2rem;
+    }
+  }
+
+  .owner-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .owner-photo {
+      width: 5rem; // 50px -> 5rem
+      height: 5rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}

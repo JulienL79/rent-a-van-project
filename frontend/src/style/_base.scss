@@ -1,0 +1,171 @@
+/* ===============================
+   BASE STYLES
+=============================== */
+@use 'variables' as *;
+@use 'mixins' as *;
+@use "sass:color";
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/font/poppins/Poppins-Regular.woff') format('woff'),
+    url('/assets/font/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/font/poppins/Poppins-BoldItalic.woff') format('woff'),
+    url('/assets/font/poppins/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/font/poppins/Poppins-Bold.woff') format('woff'),
+    url('/assets/font/poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/font/poppins/Poppins-Italic.woff') format('woff'),
+    url('/assets/font/poppins/Poppins-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: $font-size-body-sm;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  color: $text-color;
+  background-color: $bg-color;
+
+  @include tablet {
+    font-size: $font-size-body-md;
+  }
+
+  @include desktop {
+    font-size: $font-size-body-lg;
+  }
+}
+
+// TYPOGRAPHY
+h1 {
+  font-size: $font-size-h1-sm;
+  font-weight: $font-weight-title;
+  color: $primary-color;
+  margin-bottom: 2.5rem;
+
+  @include desktop {
+    font-size: $font-size-h1-lg;
+  }
+}
+
+h2 {
+  font-size: $font-size-h2-sm;
+  font-weight: $font-weight-title;
+  color: $primary-color;
+  margin-bottom: 2rem;
+
+  @include desktop {
+    font-size: $font-size-h2-lg;
+  }
+}
+
+h3 {
+  font-size: $font-size-h3-sm;
+  font-weight: $font-weight-title;
+  color: $primary-color;
+  margin-bottom: 1.5rem;
+
+  @include desktop {
+    font-size: $font-size-h3-lg;
+  }
+}
+
+p {
+  line-height: 1.2;
+}
+
+img {
+  max-width: 100%;
+}
+
+strong {
+  font-weight: bold;
+}
+
+// LINKS
+a {
+  position: relative;
+
+  &.text-link {
+    color: $primary-color;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0.2rem;
+    bottom: -0.5rem;
+    left: 0;
+    background-color: $primary-color;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    &::after {
+      width: 100%;
+    }
+
+    &.text-link {
+      text-shadow: 0 0 0.5rem rgba(
+      color.channel($primary-color, "red"),
+      color.channel($primary-color, "green"),
+      color.channel($primary-color, "blue"),
+      0.5);
+    }
+  }
+
+  &.text-link::after,
+  &.btn-link::after {
+    display: none;
+  }
+}
+
+// PARAGRAPHS
+.paragraph {
+  margin-top: 2rem;
+
+  ul {
+    list-style-type: initial;
+    padding-left: 2rem;
+  }
+
+  li {
+    margin-top: 0.5rem;
+  }
+}
+
+// UTILITIES
+.primary-color-darked {
+  color: $primary-color-darked;
+}

@@ -1,0 +1,47 @@
+/* ===============================
+   INPUTS
+=============================== */
+
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 0.1rem solid #ddd; // 1px -> 0.1rem
+  border-radius: 0.4rem; // 4px -> 0.4rem
+  resize: none;
+  font-family: inherit;
+  font-size: $font-size-body-sm;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 10rem; // 100px -> 10rem
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0.2rem solid $primary-color; // 2px -> 0.2rem
+}
+
+input[type="checkbox"],
+input[type="range"] {
+  cursor: pointer;
+  outline: none;
+}
+
+input[type="range"] {
+  padding: 0;
+}
+
+select {
+  outline: none;
+}
+
+select[multiple] {
+  height: auto;
+  max-height: 8rem;
+  overflow-y: auto;
+}

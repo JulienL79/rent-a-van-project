@@ -1,0 +1,20 @@
+/* ===============================
+   ICONS
+=============================== */
+
+
+
+.icon {
+  stroke: $primary-color;
+
+  .nav-item &,
+  .link &,
+  &.liked {
+    stroke: $secondary-color;
+  }
+
+  .nav-item &:hover,
+  .link &:hover {
+    stroke: $secondary-color;
+  }
+}

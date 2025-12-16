@@ -1,0 +1,29 @@
+/* ===============================
+   FORM FIELD
+=============================== */
+
+.form-field {
+  margin-bottom: 1rem;
+
+  &.checkbox-field {
+    display: flex;
+    align-items: center;
+    text-align: left;
+
+    input[type="checkbox"] {
+      width: 5rem; // 50px -> 5rem
+    }
+
+    .label-app {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.form-field-errors {
+  background-color: $danger-color;
+  border-radius: 0.5rem; // 5px -> 0.5rem
+  color: $bg-color;
+  padding: 0.5rem; // 5px -> 0.5rem
+  margin-top: 0.5rem; // 5px -> 0.5rem
+}

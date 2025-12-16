@@ -1,0 +1,87 @@
+/* ===============================
+   FORMS
+=============================== */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 90%;
+  max-width: 40rem; // 400px -> 40rem
+  margin: 2rem auto; // 20px -> 2rem
+  padding: 2rem;
+  background-color: $bg-color-secondary; // blanc atténué avec $bg-color-secondary
+  border-radius: 1rem; // 10px -> 1rem
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1); // 4px 6px -> 0.4rem 0.6rem
+
+  &.updateProfile-form,
+  &.updateCredentials-form {
+    max-width: none;
+  }
+
+  &.search-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 80%;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.forgot-password {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.form-global-errors {
+  background-color: $danger-color;
+  border-radius: 0.5rem;
+  color: $bg-color;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* TOGGLE SWITCH SEARCH */
+.toggle-switch-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  background: #e0e0e0;
+  border-radius: 50px;
+  padding: 0.5rem;
+
+  p {
+    margin: 0;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+
+    &.active {
+      background: $primary-color;
+      transform: scale(1.2);
+      color: $bg-color;
+    }
+  }
+}
+
+/* ============================================================================================
+DESKTOP VERSION
+=============================================================================================== */
+
+@include desktop {
+  .form-container {
+    max-width: 60rem; // 600px -> 60rem
+  }
+}

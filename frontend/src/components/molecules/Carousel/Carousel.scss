@@ -1,0 +1,47 @@
+/* ===============================
+  CAROUSEL
+=============================== */
+
+
+/* Conteneur de la modal de l'image sélectionnée */
+.selected-image-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Conteneur des miniatures */
+.thumbnails-slider {
+  margin-top: 1rem; // 10px -> 1rem
+  padding: 0.5rem;  // 5px -> 0.5rem
+  overflow: hidden;
+}
+
+/* Images miniatures */
+.thumbnail-image {
+  width: 20%; 
+  height: 6rem;      // 60px -> 6rem
+  object-fit: cover;
+  border-radius: 0.5rem; // 5px -> 0.5rem
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover,
+  &.slider-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.2); // 4px 8px -> 0.4rem 0.8rem
+  }
+}
+
+/* Miniature active (celle sélectionnée) */
+.swiper-slide-thumb-active .thumbnail-image {
+  border: 0.2rem solid $primary-color; // 2px -> 0.2rem
+  box-shadow: 0 0 1rem rgba(0, 123, 255, 0.5);
+}

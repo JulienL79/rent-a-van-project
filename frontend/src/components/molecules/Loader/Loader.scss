@@ -1,0 +1,95 @@
+/* ===============================
+   LOADING / SPINNER
+=============================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60vh;
+
+  .loader {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20rem; // 200px -> 20rem
+    height: 20rem;
+
+    .loading-image {
+      width: 50%;
+      height: 50%;
+      z-index: 1;
+    }
+
+    .spinner {
+      position: absolute;
+      border: 0.4rem solid transparent; // 4px -> 0.4rem
+      border-top: 1rem solid $primary-color; // 10px -> 1rem
+      border-radius: 50%;
+      animation: spin 1.5s ease-out infinite;
+
+      &.large-spinner {
+        width: 100%;
+        height: 100%;
+        animation-duration: 1.5s;
+      }
+
+      &.small-spinner {
+        width: 80%;
+        height: 80%;
+        animation-duration: 1.2s;
+      }
+
+      &:hover {
+        cursor: pointer;
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  .loading-text {
+    margin-top: 5rem; // 50px -> 5rem
+    font-size: $font-size-h3-lg;
+    color: $primary-color;
+  }
+
+  .small-text {
+    margin-top: 1rem; // 10px -> 1rem
+    font-size: $font-size-h3-sm;
+    color: $primary-color;
+    text-align: center;
+  }
+}
+
+/* ===============================
+   ANIMATIONS
+=============================== */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+=============================== */
+
+@include tablet {
+  .loading-container {
+    .loading-text {
+      margin-top: 4rem; // 40px -> 4rem
+      font-size: $font-size-h3-sm;
+    }
+
+    .small-text {
+      font-size: $font-size-body-lg;
+    }
+  }
+}
