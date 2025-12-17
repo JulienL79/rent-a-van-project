@@ -19,5 +19,3 @@ COPY shared ./shared
 WORKDIR /app/frontend
 
 EXPOSE 5173
-
-CMD ["npm", "run", "dev"]

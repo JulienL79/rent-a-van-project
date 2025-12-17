@@ -34,7 +34,7 @@ services:
         condition: service_started
     command: npm run dev
 
-  # 4. Serveur Proxy
+  # 3. Front
   frontend:
     build:
       context: .
@@ -46,6 +46,9 @@ services:
       - /app/shared/node_modules
     ports:
       - "5173:5173"
+    env_file:
+      - .env.dev
+    command: npm run dev -- --host
 
   # 4. Redis
   redis:

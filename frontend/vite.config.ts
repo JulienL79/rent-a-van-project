@@ -28,4 +28,10 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 2000, // 2000 kB = 2 Mo, pour que le warning disparaisse
   },
+  server: {
+    host: true,
+    watch: {
+      usePolling: true,
+    },
+  },
 });
