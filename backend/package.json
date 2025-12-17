@@ -8,12 +8,11 @@
     "build": "tsc",
     "dev": "tsx watch ./src/server.ts",
     "start": "node dist/backend/src/server.js",
-    "db:seed": "ts-node scripts/seed.ts",
-    "db:truncate": "ts-node scripts/truncate.ts",
-    "db:drop": "ts-node scripts/drop.ts",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:truncate": "tsx scripts/truncate.ts",
+    "db:drop": "tsx scripts/drop.ts",
     "generate": "drizzle-kit generate --config src/config/drizzle.config.ts",
-    "migrate": "tsx src/config/migrate.ts",
-    "studio": "drizzle-kit studio --config=src/config/drizzle.config.ts"
+    "migrate": "tsx src/config/migrate.ts"
   },
   "keywords": [],
   "author": "",

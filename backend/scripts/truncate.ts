@@ -1,12 +1,8 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import * as schema from "../dist/backend/src/schemas/index.js"; // utilise le code source TS
-import { logger } from "../dist/backend/src/utils/index.js";
-import { pool } from "./utils/localPool.ts";
+import { logger } from "../src/utils/index.js";
+import { db, pool } from "../src/config/index.js";
 
 async function main() {
   try {
-    const db = drizzle(pool, { schema });
-
     logger.info("🌱 Connected to DB");
 
     const tablesRes = await pool.query(
@@ -29,6 +25,7 @@ async function main() {
   } finally {
     await pool.end();
     logger.info("💤 Pool fermé");
+    process.exit(0);
   }
 }
 

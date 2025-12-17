@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import * as schema from "../dist/backend/src/schemas/index.js";
+import * as schema from "../src/schemas/index.js";
 import type {
   NewBooking,
   NewEquipment,
@@ -10,11 +10,8 @@ import type {
   NewMessage,
   NewCategory,
 } from "../src/entities/index.js";
-import { hashPassword, logger } from "../dist/backend/src/utils/index.js";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { pool } from "./utils/localPool.ts";
-
-const db = drizzle(pool, { schema });
+import { hashPassword, logger } from "../src/utils/index.js";
+import { db, pool } from "../src/config/index.js";
 
 const userInfos = [] as { email: string; password: string }[];
 
@@ -297,6 +294,7 @@ async function main(): Promise<void> {
   } finally {
     console.log("userInfos: ", userInfos);
     await pool.end();
+    process.exit(0);
   }
 }
 

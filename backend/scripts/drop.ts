@@ -1,5 +1,5 @@
-import { logger } from "../dist/backend/src/utils/index.js";
-import { pool } from "./utils/localPool.ts";
+import { logger } from "../src/utils/index.js";
+import { pool } from "../src/config/index.js";
 
 async function main() {
   try {
@@ -14,6 +14,8 @@ async function main() {
     logger.error("❌ Erreur lors du truncate :", err);
   } finally {
     await pool.end();
+    logger.info("💤 Pool fermé");
+    process.exit(0);
   }
 }
 
