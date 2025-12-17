@@ -1,14 +1,9 @@
-import { Pool } from "pg";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
-import { env } from "./index.js";
-import { logger } from "../utils/index.js";
-
-const { DATABASE_URL } = env;
+import { pool } from "../src/config/index.js";
+import { logger } from "../src/utils/index.js";
 
 async function main() {
-  const pool = new Pool({ connectionString: DATABASE_URL });
-
   try {
     logger.info("🌐 Connecting to database...");
     const db: NodePgDatabase = drizzle(pool);
@@ -23,6 +18,7 @@ async function main() {
     // Toujours fermer le pool pour éviter les connexions pendantes
     await pool.end();
     logger.info("🔌 Database connection closed.");
+    process.exit(0);
   }
 }
 

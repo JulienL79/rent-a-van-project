@@ -16,8 +16,6 @@ const db_name = process.env.POSTGRES_DB!;
 const db_host = process.env.POSTGRES_HOST!;
 const db_port = process.env.POSTGRES_PORT!;
 
-console.log("NODE_ENV: ", process.env.NODE_ENV);
-
 export const env: EnvConfig = {
   PORT: parseInt(process.env.PORT || "3000"),
   NODE_ENV: process.env.NODE_ENV as "development" | "production" | "test",
