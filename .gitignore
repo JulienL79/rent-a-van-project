@@ -22,7 +22,7 @@ coverage
 *.lcov
 
 # Build output
-/dist
+dist/
 build/
 .vite/
 .next/
