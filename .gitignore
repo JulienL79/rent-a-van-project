@@ -28,12 +28,9 @@ build/
 .next/
 
 # Environment files
-.env
-.env.local
-.env.prod
-.env.development.local
-.env.test.local
-.env.production.local
+*.env*
+# Mais garder le fichier d'exemple
+!*.env.example
 
 # IDEs and editors
 .vscode/
