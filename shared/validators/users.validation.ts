@@ -16,7 +16,17 @@ export const userRegisterValidation = z
       .date()
       .refine((date) => !isNaN(new Date(date).getTime()), {
         message: "La date de naissance est requise",
-      }),
+      })
+      .refine(
+        (date) => {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          return date < today;
+        },
+        {
+          message: "La date doit être antérieure à aujourd'hui",
+        },
+      ),
     email: z
       .email({ message: "Adresse email invalide" })
       .trim()
@@ -97,7 +107,17 @@ export const userUpdateValidation = z.object({
     .date()
     .refine((date) => !isNaN(new Date(date).getTime()), {
       message: "La date de naissance est requise",
-    }),
+    })
+    .refine(
+      (date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date < today;
+      },
+      {
+        message: "La date doit être antérieure à aujourd'hui",
+      },
+    ),
   phoneNumber: z
     .string()
     .trim()

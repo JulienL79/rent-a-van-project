@@ -24,8 +24,7 @@ export const searchValidation = z
           return inputDate >= today;
         },
         {
-          message:
-            "La date de début doit être ultérieure ou égale à aujourd'hui",
+          message: "La date de début ne peut pas être antérieure à aujourd'hui",
         },
       )
       .transform((val) => new Date(val)), // Convertir en objet Date
@@ -36,7 +35,7 @@ export const searchValidation = z
         "La date de fin doit être une date valide.",
       )
       .refine((date) => new Date(date) > new Date(), {
-        message: "La date de fin doit être ultérieure à aujourd'hui",
+        message: "La date de fin ne peut pas être antérieure à aujourd'hui",
       })
       .transform((val) => new Date(val)), // Convertir en objet Date
     type: z.enum(["van", "camping-car"]),

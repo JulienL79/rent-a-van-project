@@ -3,6 +3,8 @@ import { useAuthStore } from "../../../store/useAuthStore";
 import { useState } from "react";
 import "./Header.scss";
 import { useFilterStore } from "../../../store/useFilterStore";
+import type { IHeaderItemData } from "./Header.props";
+import { HEADER_ITEMS } from "./HeaderData";
 
 export const Header: React.FC = () => {
   const { isAuthenticated, user } = useAuthStore();
@@ -11,10 +13,6 @@ export const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { setVehicleType } = useFilterStore();
   const isBurgerActive = isMenuOpen && !isClosing;
-
-  const handleChangeType = (type: "camping-car" | "van") => {
-    setVehicleType(type);
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -26,7 +24,7 @@ export const Header: React.FC = () => {
       setTimeout(() => {
         setIsMenuOpen(false);
         setIsClosing(false);
-      }, 500); // durée de l'animation slideLeft
+      }, 500);
     } else {
       setIsMenuOpen(true);
     }
@@ -37,7 +35,32 @@ export const Header: React.FC = () => {
     setTimeout(() => {
       setIsMenuOpen(false);
       setIsClosing(false);
-    }, 500); // même durée que l'animation CSS
+    }, 500);
+  };
+
+  const canDisplayItem = (item: IHeaderItemData) => {
+    if (!item.visibility || item.visibility === "ALL") return true;
+
+    if (item.visibility === "AUTH") return isAuthenticated;
+    if (item.visibility === "GUEST") return !isAuthenticated;
+    if (item.visibility === "ADMIN") return user?.role === "admin";
+
+    return false;
+  };
+
+  const handleItemAction = (action?: IHeaderItemData["action"]) => {
+    switch (action) {
+      case "SET_CAMPING_CAR":
+        setVehicleType("camping-car");
+        scrollToTop();
+        break;
+      case "SET_VAN":
+        setVehicleType("van");
+        scrollToTop();
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -48,248 +71,47 @@ export const Header: React.FC = () => {
         <ul
           className={`nav-links ${isMenuOpen ? "open" : ""} ${isClosing ? "closing" : ""}`}
         >
-          <li>
-            <NavItem
-              to={`/`}
-              content={"Camping-car"}
-              onClick={() => {
-                handleChangeType("camping-car");
-                scrollToTop();
-                handleNavClick();
-              }}
-            />
-          </li>
-          <li>
-            <NavItem
-              to={`/`}
-              content={"Van"}
-              onClick={() => {
-                handleChangeType("van");
-                scrollToTop();
-                handleNavClick();
-              }}
-            />
-          </li>
+          {HEADER_ITEMS.filter(canDisplayItem).map((item) => {
+            const hasDropdown = !!item.dropdown;
 
-          {user && user.role === "admin" && (
-            <li
-              className="profile-menu"
-              onMouseEnter={() => setActiveDropdown("admin")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <NavItem
-                to={`/admin/home`}
-                content={"Administration"}
-                onClick={() => {
-                  setActiveDropdown(null);
-                  handleNavClick();
-                }}
-              />
-              <ul
-                className={`dropdown ${activeDropdown === "admin" ? "open-dropdown" : ""}`}
+            return (
+              <li
+                key={item.id}
+                className={hasDropdown ? "profile-menu" : ""}
+                onMouseEnter={() => hasDropdown && setActiveDropdown(item.id)}
+                onMouseLeave={() => hasDropdown && setActiveDropdown(null)}
               >
-                <li>
-                  <NavItem
-                    to="/admin/home"
-                    content="Accueil"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/users"
-                    content="Utilisateurs"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/vehicles"
-                    content="Véhicules"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/categories"
-                    content="Catégories"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/equipments"
-                    content="Équipements"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/pictures"
-                    content="Photos"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/bookings"
-                    content="Réservations"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-                <li>
-                  <NavItem
-                    to="/admin/messages"
-                    content="Messages"
-                    onClick={() => {
-                      setActiveDropdown(null);
-                      handleNavClick();
-                    }}
-                  />
-                </li>
-              </ul>
-            </li>
-          )}
+                <NavItem
+                  to={item.to!}
+                  content={item.label}
+                  onClick={() => {
+                    handleItemAction(item.action);
+                    handleNavClick();
+                  }}
+                />
 
-          <li
-            className="profile-menu"
-            onMouseEnter={() => setActiveDropdown("user")}
-            onMouseLeave={() => setActiveDropdown(null)}
-          >
-            {isAuthenticated ? (
-              <>
-                <NavItem
-                  to={`/profile/home`}
-                  content={"Mon espace"}
-                  onClick={() => {
-                    setActiveDropdown(null);
-                    handleNavClick();
-                  }}
-                />
-                <ul
-                  className={`dropdown ${activeDropdown === "user" ? "open-dropdown" : ""}`}
-                >
-                  <li>
-                    <NavItem
-                      to={`/profile/home`}
-                      content={"Mon Profil"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/profile/bookings`}
-                      content={"Réservations"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/profile/vehicles`}
-                      content={"Véhicules"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/profile/mailbox`}
-                      content={"Messagerie"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/profile/settings`}
-                      content={"Paramètres"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/logout`}
-                      content={"Déconnexion"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                </ul>
-              </>
-            ) : (
-              <>
-                <NavItem
-                  to={`/login`}
-                  content={"Mon espace"}
-                  onClick={() => {
-                    setActiveDropdown(null);
-                    handleNavClick();
-                  }}
-                />
-                <ul
-                  className={`dropdown ${activeDropdown === "user" ? "open-dropdown" : ""}`}
-                >
-                  <li>
-                    <NavItem
-                      to={`/login`}
-                      content={"Se Connecter"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                  <li>
-                    <NavItem
-                      to={`/register`}
-                      content={"S'inscrire"}
-                      onClick={() => {
-                        setActiveDropdown(null);
-                        handleNavClick();
-                      }}
-                    />
-                  </li>
-                </ul>
-              </>
-            )}
-          </li>
+                {hasDropdown && (
+                  <ul
+                    className={`dropdown ${
+                      activeDropdown === item.id ? "open-dropdown" : ""
+                    }`}
+                  >
+                    {item.dropdown!.map((sub) => (
+                      <li key={sub.id}>
+                        <NavItem
+                          to={sub.to!}
+                          content={sub.label}
+                          onClick={handleNavClick}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
+
         <div
           className={`menu-hamburger ${isBurgerActive ? "active" : ""}`}
           id="burger-menu"

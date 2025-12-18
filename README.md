@@ -14,7 +14,8 @@ La structure du projet est organisée autour de deux applications principales (b
 ├── infrastructure/              # Fichiers de configuration de l'environnement (Docker, etc.)
 │   ├── db/                      # Stockage et configuration BDD (ex: scripts d'init)
 │   ├── nginx/                   # Configuration du reverse proxy (nginx.conf)
-│   └── docker-compose.yml       # Définition de l'environnement multi-conteneurs
+│   └── docker-compose.dev.yml   # Définition de l'environnement dev multi-conteneurs
+│   └── docker-compose.prod.yml  # Définition de l'environnement prod multi-conteneurs
 ├── backend/                     # Application API (Node.js/Express)
 │   ├── src/                     # Code source
 │   │   ├── controllers/         # Logique de gestion des requêtes (C de MVC)
@@ -115,17 +116,18 @@ Utilisez Git pour récupérer le code source :
 
 ```bash
 # Clonez le dépôt (remplacez l'URL par la bonne adresse)
-git clone https://github.com/JulienL79/event-hub.git
+git clone https://github.com/JulienL79/rent-a-van-project.git
 # Déplacez-vous dans le répertoire du projet
-cd eventhub
+cd rent-a-van-project
 ```
 
 **Étape 2 : Configuration de l'Environnement**
 Créez le fichier de configuration locale en copiant l'exemple fourni :
 
 ```bash
-# Crée le fichier .env en copiant l'exemple
-cp .env.example .env
+# Crée les fichier .env.dev et .env.prod en copiant l'exemple
+cp .env.example .env.dev
+cp .env.example .env.prod
 ```
 
 ⚠️ **Important** : Ouvrez le fichier .env et ajustez les variables (clés API, ports, identifiants de base de données) si les valeurs par défaut ne conviennent pas à votre environnement.
@@ -145,16 +147,12 @@ Activez les outils de qualité de code (Husky, lint-staged, commitlint) qui séc
 npm run prepare
 ```
 
-## 2.3. Démarrage de l'Application
+## 2.3. Démarrage de l'Application en local
 Le projet utilise Docker Compose pour orchestrer les services (API Node.js et Base de Données PostgreSQL).
 
 ```bash
-# 1. Lancer les services en mode détaché (en arrière-plan)
 #    Ceci va construire les images Docker et démarrer les conteneurs.
-docker-compose up -d
-
-# 2. Vérifier que les conteneurs sont bien démarrés
-docker-compose ps
+npm run dev:up
 ```
 
 Une fois le démarrage terminé (cela peut prendre quelques secondes), l'application est opérationnelle :
@@ -163,11 +161,25 @@ Une fois le démarrage terminé (cela peut prendre quelques secondes), l'applica
 
 **Base de Données** : Accessible par le backend sur le réseau Docker.
 
+Les commandes liées à la base de données **à réaliser dans le container backend de Docker** sont :
+
+```bash
+npm run generate # -> Générer les migrations drizzle (si vous modifiez les schémas)
+npm run migrate # -> Migrer les fichiers migrations vers votre BDD
+npm run db:seed # -> Alimenter la BDD avec des données fictives
+npm run db:truncate # -> Vider les tables de la BDD
+npm run db:drop # -> Supprimer toutes les tables de la BDD
+```
+
 Pour arrêter tous les services conteneurisés :
 
 ```bash
-docker-compose down
+npm run dev:down
 ```
+
+## 2.3. Démarrage de l'Application en production
+
+**============================ A COMPLETER =====================================**
 
 ## 3. Environnement Git
 
