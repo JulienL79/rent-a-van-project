@@ -4,205 +4,215 @@
 @use "sass:color";
 
 .app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  padding: 1rem;
-  background-color: $bg-color;
-  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1); // 2px 10px -> 0.2rem 1rem
-
-  nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+    padding: 1rem;
+    background-color: $bg-color;
+    box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1); // 2px 10px -> 0.2rem 1rem
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .logo {
-  color: $primary-color;
-  font-weight: 900;
-  font-size: $font-size-logo;
-  letter-spacing: -0.3rem;
-  word-spacing: -0.1rem;
+    color: $primary-color;
+    font-weight: 900;
+    font-size: $font-size-logo;
+    letter-spacing: -0.3rem;
+    word-spacing: -0.1rem;
 
-  &:hover {
-    text-shadow:
-      0 0 1rem rgba(
-        color.channel($primary-color, "red"),
-        color.channel($primary-color, "green"),
-        color.channel($primary-color, "blue"), 
-        0.4),
-      0 0 2rem rgba(
-        color.channel($primary-color, "red"),
-        color.channel($primary-color, "green"),
-        color.channel($primary-color, "blue"),
-        0.3),
-      0 0 3rem rgba(
-        color.channel($primary-color, "red"),
-        color.channel($primary-color, "green"),
-        color.channel($primary-color, "blue"),
-        0.1);
-  }
-
-  &::after {
-    display: none;
-  }
-}
-
-.nav-links {
-  display: none;
-  gap: 2rem;
-  padding-top: 10rem;
-  font-size: $font-size-nav-sm;
-  font-weight: $font-weight-title;
-
-  &.open {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 100%;
-    height: 100vh;
-    box-sizing: border-box;
-    overflow-y: auto;
-    padding-left: 2rem;
-    padding-top: 8rem;
-    padding-bottom: 5rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 98;
-    background-color: $bg-color;
-    animation: slideRight ease-out 1s;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  &.closing {
-    animation: slideLeft ease-in 0.5s;
-  }
-
-  a {
-    padding: 0 2rem;
-    text-decoration: none;
-    color: $text-color;
-    font-weight: 500;
-    transition: color 0.3s ease;
-
-    &:hover,
-    &.current-link {
-      color: $primary-color;
+    &:hover {
+        text-shadow:
+            0 0 1rem rgba(color.channel($primary-color, "red"),
+                color.channel($primary-color, "green"),
+                color.channel($primary-color, "blue"),
+                0.4),
+            0 0 2rem rgba(color.channel($primary-color, "red"),
+                color.channel($primary-color, "green"),
+                color.channel($primary-color, "blue"),
+                0.3),
+            0 0 3rem rgba(color.channel($primary-color, "red"),
+                color.channel($primary-color, "green"),
+                color.channel($primary-color, "blue"),
+                0.1);
     }
 
     &::after {
-      background-color: $primary-color;
+        display: none;
     }
-  }
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    font-size: $font-size-nav-sm;
+    font-weight: $font-weight-title;
+    opacity: 0;
+    transition: all 0.3 ease;
+
+    .profile-menu {
+        display: none;
+    }
+
+    &.open {
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding-left: 2rem;
+        padding-top: 8rem;
+        padding-bottom: 5rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 98;
+        background-color: $bg-color;
+        opacity: 1;
+        animation: slideRight ease-out 0.5s;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .profile-menu {
+            display: block;
+        }
+    }
+
+    &.closing {
+        animation: slideLeft ease-in 0.5s;
+    }
+
+    a {
+        padding: 0 2rem;
+        text-decoration: none;
+        color: $text-color;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover,
+        &.current-link {
+            color: $primary-color;
+        }
+
+        &::after {
+            background-color: $primary-color;
+        }
+    }
+
+    @include desktop {
+        .profile-menu {
+            display: block;
+        }
+    }
 }
 
 .profile-menu {
-  position: relative; // repère pour le dropdown
-
-  .dropdown {
-    display: block;
-    position: relative;
-    z-index: 99;
-    margin-left: 5rem;
-    margin-top: 1rem;
-    padding-left: 1rem;
-    background-color: $bg-color;
-    width: calc(100% - 3rem);
-
-    a {
-      display: block;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      text-align: left;
-    }
-  }
-
-  @include tablet {
-    
-
-  }
-
-  @include desktop {
+    position: relative; // repère pour le dropdown
 
     .dropdown {
-      display: none;
-      position: absolute; // maintenant en flottant
-      top: 100%;
-      left: -2rem;
-      z-index: 101;
-      width: 130%;;
-      background-color: $bg-color-secondary;
-      margin: 0;
-      padding: 0;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        display: block;
+        position: relative;
+        z-index: 99;
+        margin-left: 5rem;
+        margin-top: 1rem;
+        padding-left: 1rem;
+        background-color: $bg-color;
+        width: calc(100% - 3rem);
 
-      a {
-        text-align: center;
-        padding: 0.5rem 1rem;
-      }
+        a {
+            display: block;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            text-align: left;
+        }
     }
 
-    &:hover .dropdown,
-    &:focus-within .dropdown {
-      display: none;
-    }
+    @include tablet {}
 
-    &:hover .open-dropdown,
-    &:focus-within .open-dropdown {
-      display: block;
+    @include desktop {
+
+        .dropdown {
+            display: none;
+            position: absolute; // maintenant en flottant
+            top: 100%;
+            left: -2rem;
+            z-index: 101;
+            width: 130%;
+            ;
+            background-color: $bg-color-secondary;
+            margin: 0;
+            padding: 0;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
+            a {
+                text-align: center;
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        &:hover .dropdown,
+        &:focus-within .dropdown {
+            display: none;
+        }
+
+        &:hover .open-dropdown,
+        &:focus-within .open-dropdown {
+            display: block;
+        }
     }
-  }
 }
 
 .menu-hamburger {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 3rem; // 30px -> 3rem
-  height: 2rem; // 20px -> 2rem
-  cursor: pointer;
-  z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 3rem; // 30px -> 3rem
+    height: 2rem; // 20px -> 2rem
+    cursor: pointer;
+    z-index: 99;
 
-  .line {
-    width: 90%;
-    height: 0.4rem; // 4px -> 0.4rem
-    border-radius: 0.5rem;
-    background-color: $primary-color;
-    transition: transform 0.8s ease;
+    .line {
+        width: 90%;
+        height: 0.4rem; // 4px -> 0.4rem
+        border-radius: 0.5rem;
+        background-color: $primary-color;
+        transition: transform 0.8s ease;
 
-    &:nth-child(2) {
-      transition: all 0.5s ease;
-    }
-  }
-
-  &.active {
-    .line:nth-child(1) {
-      transform: translateY(0.8rem) rotate(45deg); // 8px -> 0.8rem
+        &:nth-child(2) {
+            transition: all 0.5s ease;
+        }
     }
 
-    .line:nth-child(2) {
-      opacity: 0;
-    }
+    &.active {
+        .line:nth-child(1) {
+            transform: translateY(0.8rem) rotate(45deg); // 8px -> 0.8rem
+        }
 
-    .line:nth-child(3) {
-      transform: translateY(-0.8rem) rotate(-45deg); // -8px -> -0.8rem
+        .line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .line:nth-child(3) {
+            transform: translateY(-0.8rem) rotate(-45deg); // -8px -> -0.8rem
+        }
     }
-  }
 }
 
 /* ===============================
@@ -210,20 +220,20 @@
 =============================== */
 
 @include desktop {
-  .menu-hamburger {
-    display: none;
-  }
-
-  .nav-links {
-    display: flex;
-    margin-top: 0;
-    padding-top: 0;
-    font-size: $font-size-nav-lg;
-
-    &.closing {
-      animation: none;
+    .menu-hamburger {
+        display: none;
     }
-  }
+
+    .nav-links {
+        opacity: 1;
+        margin-top: 0;
+        padding-top: 0;
+        font-size: $font-size-nav-lg;
+
+        &.closing {
+            animation: none;
+        }
+    }
 }
 
 /* ===============================
@@ -231,23 +241,25 @@
 =============================== */
 
 @keyframes slideRight {
-  0% {
-    transform: translateX(-10rem); // 100px -> 10rem
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+    0% {
+        transform: translateX(-10rem); // 100px -> 10rem
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 @keyframes slideLeft {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-10rem); // 100px -> 10rem
-    opacity: 0;
-  }
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-10rem); // 100px -> 10rem
+        opacity: 0;
+    }
 }

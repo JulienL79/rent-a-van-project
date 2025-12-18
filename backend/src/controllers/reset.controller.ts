@@ -3,15 +3,17 @@ import {
   APIResponse,
   hashPassword,
   logger,
-  sendResetEmail,
   zodFieldErrors,
 } from "../utils/index.js";
 import { passwordResetTokenModel, userModel } from "../models/index.js";
 import {
   emailValidation,
   resetPasswordValidation,
+  uuidValidator,
 } from "@rent-a-van/shared/validators/index.js";
 import { z } from "zod";
+import { env } from "../config/index.js";
+import { IMailMessage, sendEmail } from "../services/mailer.js";
 
 export const resetController = {
   requestResetPassword: async (request: Request, response: Response) => {
@@ -36,7 +38,18 @@ export const resetController = {
         userId: user.id,
       });
 
-      await sendResetEmail(email, token);
+      const resetMessage: IMailMessage = {
+        type: "reset",
+        from: env.RESET_MAIL_ADDRESS,
+        fromName: "Support - RentAVan",
+        to: email,
+        toName: `${user.firstname} ${user.lastname}`,
+        subject: "Réinitialisation de mot de passe",
+        text: `Cliquez sur ce lien pour réinitialiser votre mot de passe : ${env.WEBSITE_URL}/reset/${token}`,
+        html: `<h1>Bonjour ${user.firstname},</h1><p>Vous avez effectué une demande de réinitialisation de mot de passe.</p><p>Veuillez cliquer sur ce lien pour réinitialiser votre mot de passe : <a href="${env.WEBSITE_URL}/reset/${token}">Réinitialiser mon mot de passe</a></p>`,
+      };
+
+      await sendEmail(token, resetMessage);
 
       return APIResponse(
         response,
@@ -67,6 +80,11 @@ export const resetController = {
       logger.info(`[UPDATE] Modification du mot de passe`);
       const { token } = request.params;
       const { password } = resetPasswordValidation.parse(request.body);
+      const tokenParsed = uuidValidator.safeParse(token);
+
+      if (!tokenParsed.success) {
+        return APIResponse(response, null, "Token invalide ou expiré.", 400);
+      }
 
       // Vérifier la validité du token
       const [tokenData] = await passwordResetTokenModel.getByToken(token);

@@ -14,7 +14,7 @@ resetRouter.post(
 resetRouter.put(
   "/:token",
   isAuthenticated(false),
-  requestLimiter(3),
+  requestLimiter(50),
   resetController.resetPassword,
 );
 

@@ -26,6 +26,8 @@ export const env: EnvConfig = {
   RESET_MAIL_ADDRESS: process.env.RESET_MAIL_ADDRESS || "reset@gmail.com",
   WEBSITE_URL: process.env.WEBSITE_URL || "A_MODIFIER",
   PASSWORD_RESET_MAIL: process.env.PASSWORD_RESET_MAIL || "reset",
+  MJ_APIKEY_PUBLIC: process.env.MJ_APIKEY_PUBLIC || "",
+  MJ_APIKEY_PRIVATE: process.env.MJ_APIKEY_PRIVATE || "",
   TZ: process.env.TZ || "Europe/Paris",
   REDIS_HOST: process.env.REDIS_HOST || "redis",
   REDIS_PORT: process.env.REDIS_PORT || "6379",

@@ -1,7 +1,6 @@
 export * from "./logger.js";
 export * from "./response.js";
 export * from "./password.js";
-export * from "./mailer.js";
 export * from "./priceCalculator.js";
 export * from "./searchVehicle.js";
 export * from "./calculateDistance.js";

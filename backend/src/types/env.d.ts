@@ -7,6 +7,8 @@ export interface EnvConfig {
   RESET_MAIL_ADDRESS: string;
   WEBSITE_URL: string;
   PASSWORD_RESET_MAIL: string;
+  MJ_APIKEY_PUBLIC: string;
+  MJ_APIKEY_PRIVATE: string;
   TZ: string;
   REDIS_HOST: string;
   REDIS_PORT: string;

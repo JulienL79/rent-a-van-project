@@ -235,3 +235,5 @@ export const resetPasswordValidation = z
     message: "Les mots de passe doivent être identiques.",
     path: ["confirmPassword"],
   });
+
+export const uuidValidator = z.uuid();
