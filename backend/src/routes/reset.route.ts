@@ -7,14 +7,14 @@ const resetRouter = Router();
 resetRouter.post(
   "/",
   isAuthenticated(false),
-  requestLimiter(3),
+  requestLimiter(10),
   resetController.requestResetPassword,
 );
 
 resetRouter.put(
   "/:token",
   isAuthenticated(false),
-  requestLimiter(50),
+  requestLimiter(10),
   resetController.resetPassword,
 );
 
