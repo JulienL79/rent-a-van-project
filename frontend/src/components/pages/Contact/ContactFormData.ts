@@ -2,9 +2,29 @@ import type { IFormProps } from "../../organisms/Form";
 import type { FormSubmitResult } from "../../../types/FormSubmitResult";
 
 export const contactFormData: IFormProps = {
-  title: "Contactez-Nous",
+  title: "Nous contacter",
   type: "contact",
   fields: [
+    {
+      kind: "base",
+      id: "firstname",
+      type: "text",
+      placeholder: "",
+      required: true,
+      autoComplete: "given-name",
+      label: "Prénom*",
+      onChange: () => {},
+    },
+    {
+      kind: "base",
+      id: "lastname",
+      type: "text",
+      placeholder: "",
+      required: true,
+      autoComplete: "family-name",
+      label: "Nom*",
+      onChange: () => {},
+    },
     {
       kind: "base",
       id: "email",
@@ -12,7 +32,7 @@ export const contactFormData: IFormProps = {
       placeholder: "",
       required: true,
       autoComplete: "email",
-      label: "Adresse e-mail",
+      label: "Adresse e-mail*",
       onChange: () => {},
     },
     {
@@ -22,7 +42,7 @@ export const contactFormData: IFormProps = {
       placeholder: "",
       required: true,
       autoComplete: "tel",
-      label: "Numéro de téléphone",
+      label: "Numéro de téléphone*",
       onChange: () => {},
     },
     {
@@ -32,7 +52,7 @@ export const contactFormData: IFormProps = {
       placeholder: "",
       required: true,
       autoComplete: "off",
-      label: "Sujet",
+      label: "Sujet*",
       onChange: () => {},
     },
     {
@@ -42,16 +62,13 @@ export const contactFormData: IFormProps = {
       placeholder: "",
       required: true,
       autoComplete: "off",
-      label: "Message",
+      label: "Message*",
       onChange: () => {},
     },
   ],
   buttonContent: "Envoyer",
-  onSubmit: async (formData: {
-    [key: string]: string | File | boolean | string[];
-  }): Promise<FormSubmitResult> => {
+  onSubmit: async (): Promise<FormSubmitResult> => {
     try {
-      console.log("Données du formulaire de contact :", formData);
       return { ok: true };
     } catch (error: any) {
       if (error.data && typeof error.data === "object") {

@@ -67,7 +67,6 @@ export const AdminUser = () => {
 
     if (!id) {
       loadData();
-      if (datas) console.log("Données récupérées");
     }
   }, [id, deletedUserCount]);
 

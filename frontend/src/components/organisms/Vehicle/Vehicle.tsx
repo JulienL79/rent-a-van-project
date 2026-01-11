@@ -26,6 +26,8 @@ import { fetchAllEquipments } from "../../../api/equipmentApi";
 import { Carousel } from "../../molecules/Carousel/Carousel";
 import "./Vehicle.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
+import { vehiclesUpdateValidation } from "@rent-a-van/shared/validators";
 
 export const Vehicle: React.FC<IVehicleProps> = ({ page, id, onInteract }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -87,12 +89,17 @@ export const Vehicle: React.FC<IVehicleProps> = ({ page, id, onInteract }) => {
     [key: string]: any;
   }): Promise<FormSubmitResult> => {
     try {
-      const payload: { [key: string]: any } = {
+      const payload = {
         ...formData,
         cityCode: locationCode,
       };
+      const payloadParsed = vehiclesUpdateValidation.safeParse(payload);
+      if (!payloadParsed.success) {
+        const errors = zodFieldErrors(payloadParsed.error);
+        return { ok: false, errors: errors };
+      }
 
-      await updateVehicle(id, payload as VehicleUpdatePayload);
+      await updateVehicle(id, payloadParsed.data);
       setIsUpdatingVehicle(false);
       setLocationCode("");
       handleSuccess("Véhicule mis à jour avec succès !");

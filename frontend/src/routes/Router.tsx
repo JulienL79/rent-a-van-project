@@ -14,6 +14,7 @@ import { Profile } from "../components/pages/Profile";
 import { PrivateAdminRoute } from "./PrivateAdminRoute";
 import { Admin } from "../components/pages/Admin";
 import { Search } from "../components/pages/Search";
+import { Reset } from "../components/pages/Reset/Reset";
 
 export const Router = () => {
   return (
@@ -63,6 +64,28 @@ export const Router = () => {
           element={
             <>
               <Register />
+            </>
+          }
+        />
+      </Route>
+
+      <Route element={<PrivateNonAuthRoute />}>
+        <Route
+          path="/reset/:token"
+          element={
+            <>
+              <Reset />
+            </>
+          }
+        />
+      </Route>
+
+      <Route element={<PrivateNonAuthRoute />}>
+        <Route
+          path="/reset"
+          element={
+            <>
+              <Reset />
             </>
           }
         />

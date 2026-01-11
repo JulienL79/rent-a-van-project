@@ -11,4 +11,4 @@ export * from "./equipments.controller.js";
 export * from "./bookings.controller.js";
 export * from "./search.controller.js";
 export * from "./addresses.controller.js";
-export * from "./ping.controller.js";
+export * from "./contact.controller.js";

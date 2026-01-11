@@ -55,36 +55,60 @@
 }
 
 .nav-links {
+    position: fixed;
+    background-color: $bg-color;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding-left: 2rem;
+    padding-top: 8rem;
+    padding-bottom: 5rem;
     display: flex;
     gap: 2rem;
     font-size: $font-size-nav-sm;
     font-weight: $font-weight-title;
+    transform: translateX(-10rem);
     opacity: 0;
-    transition: all 0.3 ease;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: start;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 98;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
 
     .profile-menu {
         display: none;
     }
 
-    &.open {
-        flex-direction: column;
-        align-items: start;
-        width: 100%;
-        height: 100vh;
-        box-sizing: border-box;
-        overflow-y: auto;
-        padding-left: 2rem;
-        padding-top: 8rem;
-        padding-bottom: 5rem;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 98;
-        background-color: $bg-color;
+    @include desktop {
+        position: relative;
+        width: auto;
+        height: auto;
+        padding-bottom: 0;
+        pointer-events: auto;
+        flex-direction: row;
+        overflow-y: inherit;
         opacity: 1;
-        animation: slideRight ease-out 0.5s;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        margin-top: 0;
+        padding-top: 0;
+        font-size: $font-size-nav-lg;
+
+        .profile-menu {
+            display: block;
+        }
+    }
+
+    &.open {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+
 
         &::-webkit-scrollbar {
             display: none;
@@ -93,10 +117,6 @@
         .profile-menu {
             display: block;
         }
-    }
-
-    &.closing {
-        animation: slideLeft ease-in 0.5s;
     }
 
     a {
@@ -113,12 +133,6 @@
 
         &::after {
             background-color: $primary-color;
-        }
-    }
-
-    @include desktop {
-        .profile-menu {
-            display: block;
         }
     }
 }
@@ -188,6 +202,10 @@
     cursor: pointer;
     z-index: 99;
 
+    @include desktop {
+        display: none;
+    }
+
     .line {
         width: 90%;
         height: 0.4rem; // 4px -> 0.4rem
@@ -213,53 +231,6 @@
             transform: translateY(-0.8rem) rotate(-45deg); // -8px -> -0.8rem
         }
     }
-}
 
-/* ===============================
-   DESKTOP VERSION
-=============================== */
 
-@include desktop {
-    .menu-hamburger {
-        display: none;
-    }
-
-    .nav-links {
-        opacity: 1;
-        margin-top: 0;
-        padding-top: 0;
-        font-size: $font-size-nav-lg;
-
-        &.closing {
-            animation: none;
-        }
-    }
-}
-
-/* ===============================
-   KEYFRAMES
-=============================== */
-
-@keyframes slideRight {
-    0% {
-        transform: translateX(-10rem); // 100px -> 10rem
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideLeft {
-    0% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateX(-10rem); // 100px -> 10rem
-        opacity: 0;
-    }
 }

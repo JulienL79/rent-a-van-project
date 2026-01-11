@@ -1,4 +1,5 @@
 export * from "./categories.validation.js";
+export * from "./contact.validation.js";
 export * from "./pictures.validation.js";
 export * from "./roles.validation.js";
 export * from "./users.validation.js";

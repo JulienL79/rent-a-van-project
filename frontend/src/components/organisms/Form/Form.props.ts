@@ -17,7 +17,8 @@ export interface IFormProps {
   type:
     | "login"
     | "register"
-    | "resetPassword"
+    | "resetRequest"
+    | "resetConfirm"
     | "updateProfile"
     | "updateVehicle"
     | "updateCredentials"

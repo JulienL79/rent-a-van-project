@@ -292,7 +292,7 @@ async function main(): Promise<void> {
   } catch (err) {
     logger.error("❌ Seeding failed:", err);
   } finally {
-    console.log("userInfos: ", userInfos);
+    logger.info("userInfos: ", userInfos);
     await pool.end();
     process.exit(0);
   }

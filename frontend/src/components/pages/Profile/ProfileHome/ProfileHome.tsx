@@ -8,10 +8,6 @@ import { Form, type IFormProps } from "../../../organisms/Form";
 import { formatShortDateFr } from "../../../../utils/DateConverter";
 import { Button } from "../../../atoms/Button";
 import type { FormSubmitResult } from "../../../../types/FormSubmitResult";
-import type {
-  UpdateCredentialsPayload,
-  UserUpdatePayload,
-} from "@rent-a-van/shared/types/user.type";
 import { motion } from "framer-motion";
 import type { IUserDetails } from "./ProfileHome.props";
 import {
@@ -20,6 +16,11 @@ import {
   updateUserCredentials,
 } from "../../../../api/userApi";
 import { handleSuccess } from "../../../../utils/feedbackHandler";
+import {
+  updateCredentialsValidation,
+  userUpdateValidation,
+} from "@rent-a-van/shared/validators";
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
 
 export const ProfileHome = () => {
   const [userDetails, setUserDetails] = useState<IUserDetails | null>(null);
@@ -36,27 +37,20 @@ export const ProfileHome = () => {
   }): Promise<FormSubmitResult> => {
     try {
       if (user && isUpdatingUserCredentials) {
-        const payload: UpdateCredentialsPayload = {
-          email: formData.email,
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-          oldPassword: formData.oldPassword,
-        };
-        await updateUserCredentials(user.id, payload);
+        const payloadParsed = updateCredentialsValidation.safeParse(formData);
+        if (!payloadParsed.success) {
+          const errors = zodFieldErrors(payloadParsed.error);
+          return { ok: false, errors: errors };
+        }
+        await updateUserCredentials(user.id, payloadParsed.data);
         handleSuccess("Identifiants mis à jour avec succès !");
       } else if (user && isUpdatingUserDetails) {
-        const payload: UserUpdatePayload = {
-          firstname: formData.firstname,
-          lastname: formData.lastname,
-          birthdate: formData.birthdate,
-          phoneNumber: formData.phoneNumber,
-          addressStreet: formData.addressStreet,
-          addressCity: formData.addressCity,
-          addressZip: formData.addressZip,
-          addressCountry: formData.addressCountry,
-          drivingLicense: formData.drivingLicense,
-        };
-        await updateUser(user.id, payload);
+        const payloadParsed = userUpdateValidation.safeParse(formData);
+        if (!payloadParsed.success) {
+          const errors = zodFieldErrors(payloadParsed.error);
+          return { ok: false, errors: errors };
+        }
+        await updateUser(user.id, payloadParsed.data);
         handleSuccess("Informations mises à jour avec succès !");
       }
       setIsUpdatingUserDetails(false);
@@ -75,21 +69,11 @@ export const ProfileHome = () => {
   const fetchUserDetails = async (): Promise<IUserDetails | null> => {
     if (!user) return null;
     const userDetails = await fetchUserByIdWithDetails(user.id);
-    console.log(userDetails);
+
     if (!userDetails) return null;
     return {
-      firstname: userDetails.data.firstname,
-      lastname: userDetails.data.lastname,
-      birthdate: userDetails.data.birthdate,
-      email: userDetails.data.email,
-      phoneNumber: userDetails.data.phoneNumber,
-      addressStreet: userDetails.data.addressStreet,
-      addressCity: userDetails.data.addressCity,
-      addressZip: userDetails.data.addressZip,
-      addressCountry: userDetails.data.addressCountry,
+      ...userDetails.data,
       profilePicture: userDetails.data.pictures[0] || null,
-      drivingLicense: userDetails.data.drivingLicense,
-      createdAt: userDetails.data.createdAt,
     };
   };
 
@@ -104,7 +88,6 @@ export const ProfileHome = () => {
     if (!isUpdatingUserDetails && !isUpdatingUserCredentials) {
       loadUserDetails();
     }
-    console.log(isUpdatingUserDetails);
   }, [isUpdatingUserDetails, isUpdatingUserCredentials]);
 
   // Mettre à jour les données du formulaire lorsque les détails de l'utilisateur changent

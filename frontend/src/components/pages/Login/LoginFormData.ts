@@ -1,6 +1,8 @@
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
 import { useAuthStore } from "../../../store/useAuthStore";
 import type { FormSubmitResult } from "../../../types/FormSubmitResult";
 import type { IFormProps } from "../../organisms/Form";
+import { emailValidation } from "@rent-a-van/shared/validators";
 
 export const loginFormData: IFormProps = {
   title: "Connexion",
@@ -33,11 +35,16 @@ export const loginFormData: IFormProps = {
   }): Promise<FormSubmitResult> => {
     const { login } = useAuthStore.getState();
 
-    const email = formData.email as string;
-    const password = formData.password as string;
-
     try {
-      await login(email, password);
+      const password = formData.password as string;
+      const payloadParsed = emailValidation.safeParse(formData);
+
+      if (!payloadParsed.success) {
+        const errors = zodFieldErrors(payloadParsed.error);
+        return { ok: false, errors: errors };
+      }
+
+      await login(payloadParsed.data.email, password);
       return { ok: true };
     } catch (error: any) {
       if (error.data && typeof error.data === "object") {

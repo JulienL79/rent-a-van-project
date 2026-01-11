@@ -133,10 +133,10 @@ cp .env.example .env.prod
 ⚠️ **Important** : Ouvrez le fichier .env et ajustez les variables (clés API, ports, identifiants de base de données) si les valeurs par défaut ne conviennent pas à votre environnement.
 
 **Étape 3 : Installation des Dépendances**
-Installez tous les packages NPM nécessaires, en vous mettant à la raçine :
+Installez tous les packages NPM nécessaires de tous les env, en vous mettant à la raçine :
 
 ```bash
-npm install
+npm run install:all
 ```
 
 **Étape 4 : Initialisation des Hooks Git (Husky)**

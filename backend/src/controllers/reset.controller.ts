@@ -49,7 +49,7 @@ export const resetController = {
         html: `<h1>Bonjour ${user.firstname},</h1><p>Vous avez effectué une demande de réinitialisation de mot de passe.</p><p>Veuillez cliquer sur ce lien pour réinitialiser votre mot de passe : <a href="${env.WEBSITE_URL}/reset/${token}">Réinitialiser mon mot de passe</a></p>`,
       };
 
-      await sendEmail(token, resetMessage);
+      await sendEmail(resetMessage);
 
       return APIResponse(
         response,

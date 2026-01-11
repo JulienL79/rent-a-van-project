@@ -1,8 +1,9 @@
 import { createUser } from "../../../api/userApi";
 import { TermsAndPrivacy } from "./TermAndPrivacy";
-import type { UserRegisterPayload } from "@rent-a-van/shared/types/user.type";
 import type { FormSubmitResult } from "../../../types/FormSubmitResult";
 import type { IFormProps } from "../../organisms/Form";
+import { userRegisterValidation } from "@rent-a-van/shared/validators";
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
 
 export const registerFormData: IFormProps = {
   title: "Créer un compte",
@@ -10,7 +11,7 @@ export const registerFormData: IFormProps = {
   fields: [
     {
       kind: "base",
-      id: "firstName",
+      id: "firstname",
       type: "text",
       placeholder: "",
       required: true,
@@ -20,12 +21,12 @@ export const registerFormData: IFormProps = {
     },
     {
       kind: "base",
-      id: "lastName",
+      id: "lastname",
       type: "text",
       placeholder: "",
       required: true,
       autoComplete: "family-name",
-      label: "Nom de famille*",
+      label: "Nom*",
       onChange: () => {},
     },
     {
@@ -133,23 +134,14 @@ export const registerFormData: IFormProps = {
   onSubmit: async (formData: {
     [key: string]: string | File | boolean | string[];
   }): Promise<FormSubmitResult> => {
-    const payload: UserRegisterPayload = {
-      firstname: formData.firstName as string,
-      lastname: formData.lastName as string,
-      email: formData.email as string,
-      password: formData.password as string,
-      confirmPassword: formData.confirmPassword as string,
-      phoneNumber: formData.phoneNumber as string,
-      birthdate: new Date(formData.birthdate as string),
-      addressStreet: formData.addressStreet as string,
-      addressCity: formData.addressCity as string,
-      addressZip: formData.addressZip as string,
-      addressCountry: formData.addressCountry as string,
-      termsAccepted: formData.termsAccepted === true,
-    };
-
     try {
-      await createUser(payload);
+      const payloadParsed = userRegisterValidation.safeParse(formData);
+
+      if (!payloadParsed.success) {
+        const errors = zodFieldErrors(payloadParsed.error);
+        return { ok: false, errors: errors };
+      }
+      await createUser(payloadParsed.data);
       return { ok: true };
     } catch (error: any) {
       if (error.data && typeof error.data === "object") {

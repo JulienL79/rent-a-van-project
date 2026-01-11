@@ -73,7 +73,6 @@ export const AdminMessage = () => {
 
     if (!id) {
       loadData();
-      if (datas) console.log("Données récupérées");
     }
   }, [id, deletedMessageCount]);
 

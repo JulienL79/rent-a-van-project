@@ -85,7 +85,7 @@ export const Form: React.FC<IFormProps> = ({
     e.preventDefault();
     try {
       const result = await onSubmit(formData);
-      console.log(result);
+
       if (result?.ok) {
         setFormData({});
         setFormErrors({});
@@ -103,7 +103,6 @@ export const Form: React.FC<IFormProps> = ({
           handleSuccess(messageToast);
         }
       } else if (result?.errors) {
-        console.log(result.errors);
         setFormErrors(result.errors);
       }
     } catch (err) {
@@ -233,6 +232,12 @@ export const Form: React.FC<IFormProps> = ({
               S'inscrire
             </Link>
           </p>
+          <p>
+            Mot passe oublié ?{" "}
+            <Link to="/reset" className="text-link">
+              Réinitialiser
+            </Link>
+          </p>
         </div>
       )}
       {type === "register" && (
@@ -241,6 +246,30 @@ export const Form: React.FC<IFormProps> = ({
             Déjà un compte ?{" "}
             <Link to="/login" className="text-link">
               Se connecter
+            </Link>
+          </p>
+        </div>
+      )}
+      {type === "resetRequest" && (
+        <div className="form-footer">
+          <p>
+            <Link to="/login" className="text-link">
+              Revenir à l'écran de connexion
+            </Link>
+          </p>
+        </div>
+      )}
+      {type === "resetConfirm" && (
+        <div className="form-footer">
+          <p>
+            <Link to="/login" className="text-link">
+              Revenir à l'écran de connexion
+            </Link>
+          </p>
+          <p>
+            Demande expirée ?{" "}
+            <Link to="/reset" className="text-link">
+              Refaire une demande
             </Link>
           </p>
         </div>

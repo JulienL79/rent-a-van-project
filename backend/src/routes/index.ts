@@ -11,8 +11,8 @@ import pricePeriodsRouter from "./pricePeriods.route.js";
 import equipmentsRouter from "./equipments.route.js";
 import bookingsRouter from "./bookings.route.js";
 import searchRouter from "./search.route.js";
-import addressesRouter from "./addresses.router.js";
-import pingRouter from "./ping.route.js";
+import addressesRouter from "./addresses.route.js";
+import contactRouter from "./contact.route.js";
 
 const router = Router();
 
@@ -42,6 +42,6 @@ router.use("/search", searchRouter);
 
 router.use("/address", addressesRouter);
 
-router.use("/ping", pingRouter);
+router.use("/contact", contactRouter);
 
 export default router;

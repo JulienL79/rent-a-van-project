@@ -12,10 +12,11 @@ import { addVehicleFormData } from "./AddVehicleFormData";
 import { fetchAllCategories } from "../../../../api/categoryApi";
 import { fetchAllEquipments } from "../../../../api/equipmentApi";
 import { fuelTypeOptions, gearTypeOptions } from "./VehicleData";
-import type { VehicleRegisterPayload } from "@rent-a-van/shared/types/vehicle.type";
 import type { FormSubmitResult } from "../../../../types/FormSubmitResult";
 import type { IFormProps } from "../../../organisms/Form";
 import { handleError, handleSuccess } from "../../../../utils/feedbackHandler";
+import { vehiclesRegisterValidation } from "@rent-a-van/shared/validators";
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
 
 export const ProfileVehicle = () => {
   const [vehicleDatas, setVehicleDatas] = useState<
@@ -106,12 +107,18 @@ export const ProfileVehicle = () => {
     try {
       if (!locationCode) throw new Error("Le code de la ville est manquant");
 
-      const payload: { [key: string]: any } = {
+      const payload = {
         ...formData,
         cityCode: locationCode,
       };
 
-      await createVehicle(payload as VehicleRegisterPayload);
+      const payloadParsed = vehiclesRegisterValidation.safeParse(payload);
+      if (!payloadParsed.success) {
+        const errors = zodFieldErrors(payloadParsed.error);
+        return { ok: false, errors: errors };
+      }
+
+      await createVehicle(payloadParsed.data);
       setIsAddingVehicle(false);
       setLocationCode("");
       setAddedVehicleCount((prev) => prev + 1);

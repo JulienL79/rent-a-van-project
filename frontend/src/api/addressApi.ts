@@ -17,7 +17,6 @@ export const fetchCityByNameAndPostalCode = async (
     const response = await api.get<CitySuggestionResponse>(
       `/address/city/${content}`,
     );
-    console.log(response);
     return response.data;
   } catch (err: any) {
     throw err.response.data;
@@ -33,7 +32,6 @@ export const fetchCityByName = async (name: string) => {
         limit: 5,
       },
     });
-    console.log(response);
     return response;
   } catch (err: any) {
     throw err.response.data;
@@ -49,7 +47,6 @@ export const fetchCityByPostalCode = async (zip: string) => {
         limit: 5,
       },
     });
-    console.log(response);
     return response;
   } catch (err: any) {
     throw err.response.data;
@@ -62,7 +59,6 @@ export const fetchCityCoordinates = async (code: string) => {
       message: string;
       data: { lat: string; lon: string };
     }>(`/address/coord/${code}`);
-    console.log(response);
     return response;
   } catch (err: any) {
     throw err.response?.data ?? err;

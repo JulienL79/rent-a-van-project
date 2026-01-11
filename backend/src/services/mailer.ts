@@ -16,7 +16,7 @@ export interface IMailMessage {
 }
 
 // Fonction pour envoyer un mail via l'API Mailjet
-export const sendEmail = async (resetToken: string, message: IMailMessage) => {
+export const sendEmail = async (message: IMailMessage) => {
   const payload = {
     Messages: [
       {

@@ -3,13 +3,7 @@ import { z } from "zod";
 export const searchValidation = z
   .object({
     locationCode: z.string().length(5, { message: "Le code est incorrect" }),
-    radius: z
-      .string()
-      .refine(
-        (val) => !isNaN(parseFloat(val)) && parseFloat(val) > 0,
-        "Le rayon doit être un nombre positif.",
-      )
-      .transform((val) => parseFloat(val)), // Convertir en nombre
+    radius: z.number("Le rayon doit être un nombre"),
     startDate: z
       .string()
       .refine(

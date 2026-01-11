@@ -99,6 +99,14 @@ export const categoriesController = {
       APIResponse(response, null, "OK", 201);
     } catch (error: any) {
       logger.error("Erreur lors de la màj de la categorie: ", error);
+      if (error instanceof z.ZodError) {
+        return APIResponse(
+          response,
+          zodFieldErrors(error),
+          "Le formulaire est invalide",
+          400,
+        );
+      }
       APIResponse(response, null, "Erreur lors de la màj de la categorie", 500);
     }
   },

@@ -8,10 +8,11 @@ import { TestimonialSlider } from "../../atoms/TestimonialSlider";
 import { reviews } from "./HomeReviewData";
 import "./Home.scss";
 import type { FormSubmitResult } from "../../../types/FormSubmitResult";
-import type { SearchPayload } from "@rent-a-van/shared/types/search.type";
 import { searchVehicles } from "../../../api/searchApi";
 import { PageMeta } from "../../atoms/PageMeta";
 import { useNavigate } from "react-router-dom";
+import { searchValidation } from "@rent-a-van/shared/validators";
+import { zodFieldErrors } from "@rent-a-van/shared/utils/zodFieldErrors";
 
 export const Home = () => {
   const [articles, setArticles] = useState(campingcarArticles);
@@ -37,15 +38,21 @@ export const Home = () => {
       console.log(locationCity);
       console.log(locationCode);
 
-      const payload: SearchPayload = {
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+      const payload = {
+        startDate: startDate,
+        endDate: endDate,
         radius: radius,
         locationCode: locationCode,
         type: vehicleType,
       };
 
-      const searchResult = await searchVehicles(payload);
+      const payloadParsed = searchValidation.safeParse(payload);
+      if (!payloadParsed.success) {
+        const errors = zodFieldErrors(payloadParsed.error);
+        return { ok: false, errors: errors };
+      }
+
+      const searchResult = await searchVehicles(payloadParsed.data);
       console.log(searchResult);
 
       navigate("/search/results", { state: { results: searchResult?.data } });

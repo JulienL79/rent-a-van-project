@@ -73,7 +73,6 @@ export const AdminVehicle = () => {
 
     if (!id) {
       loadData();
-      if (datas) console.log("Données récupérées");
     }
   }, [id, deletedVehicleCount]);
 

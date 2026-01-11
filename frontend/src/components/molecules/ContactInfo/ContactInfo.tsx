@@ -19,8 +19,8 @@ export const ContactInfo = () => {
       <div className="paragraph">
         <h3>Email</h3>
         <p>
-          <a href="mailto:contact@rentavan.com" target="_blank">
-            contact@rentavan.com
+          <a href="mailto:no-reply-rentavan@gmail.com" target="_blank">
+            no-reply-rentavan@gmail.com
           </a>
         </p>
       </div>

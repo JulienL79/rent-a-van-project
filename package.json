@@ -4,7 +4,11 @@
     "dev:up": "docker-compose -f docker-compose.dev.yml up -d",
     "dev:down": "docker-compose -f docker-compose.dev.yml down",
     "prod:up": "docker-compose -f docker-compose.prod.yml up -d",
-    "prod:down": "docker-compose -f docker-compose.prod.yml down"
+    "prod:down": "docker-compose -f docker-compose.prod.yml down",
+    "install:frontend": "cd frontend && npm install",
+    "install:shared": "cd shared && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:all": "npm run install:frontend && npm run install:shared && npm run install:backend"
   },
   "lint-staged": {
     "*.{ts,tsx,js,yml}": [

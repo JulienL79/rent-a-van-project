@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { logger } from "./logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,14 +25,14 @@ export const deleteUploadedImage = (url: string): boolean => {
     // Vérifie si le fichier existe
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
-      console.log("Fichier supprimé :", filePath);
+      logger.info("Fichier supprimé :", filePath);
       return true;
     } else {
-      console.warn("Fichier introuvable :", filePath);
+      logger.warn("Fichier introuvable :", filePath);
       return false;
     }
   } catch (error) {
-    console.error("Erreur lors de la suppression du fichier :", error);
+    logger.error("Erreur lors de la suppression du fichier :", error);
     return false;
   }
 };

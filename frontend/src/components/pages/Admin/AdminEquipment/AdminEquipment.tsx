@@ -76,7 +76,6 @@ export const AdminEquipment = () => {
 
     if (!id) {
       loadData();
-      if (datas) console.log("Données récupérées");
     }
   }, [id, deletedEquipmentCount]);
 

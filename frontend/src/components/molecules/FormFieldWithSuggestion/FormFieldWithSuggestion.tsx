@@ -60,10 +60,8 @@ export const FormFieldWithSuggestion: React.FC<
         dataset: { code: city.code },
       },
     } as unknown as React.ChangeEvent<HTMLInputElement>;
-    console.log(city.code);
 
     if (id === "city") {
-      console.log("OK city");
       setLocationCode(city.code);
     }
 

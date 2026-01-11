@@ -215,10 +215,7 @@ export const addVehicleFormData: IFormProps = {
     },
   ],
   buttonContent: "Enregistrer",
-  onSubmit: async (formData: {
-    [key: string]: string | File | boolean | string[];
-  }): Promise<FormSubmitResult> => {
-    console.log("Données du formulaire véhicule :", formData);
+  onSubmit: async (): Promise<FormSubmitResult> => {
     return { ok: true, errors: {} };
   },
 };

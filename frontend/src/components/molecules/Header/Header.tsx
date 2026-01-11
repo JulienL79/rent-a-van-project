@@ -9,33 +9,19 @@ import { HEADER_ITEMS } from "./HeaderData";
 export const Header: React.FC = () => {
   const { isAuthenticated, user } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { setVehicleType } = useFilterStore();
-  const isBurgerActive = isMenuOpen && !isClosing;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleClick = () => {
-    if (isMenuOpen) {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsMenuOpen(false);
-        setIsClosing(false);
-      }, 500);
-    } else {
-      setIsMenuOpen(true);
-    }
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
   };
 
-  const handleNavClick = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsMenuOpen(false);
-      setIsClosing(false);
-    }, 500);
+  const closeMenu = () => {
+    setTimeout(() => setIsMenuOpen(false), 200);
   };
 
   const canDisplayItem = (item: IHeaderItemData) => {
@@ -68,9 +54,7 @@ export const Header: React.FC = () => {
       <nav>
         <NavItem to="/" content={"RentAVan"} className="logo" />
 
-        <ul
-          className={`nav-links ${isMenuOpen ? "open" : ""} ${isClosing ? "closing" : ""}`}
-        >
+        <ul className={`nav-links ${isMenuOpen ? "open" : ""}`}>
           {HEADER_ITEMS.filter(canDisplayItem).map((item) => {
             const hasDropdown = !!item.dropdown;
 
@@ -86,7 +70,7 @@ export const Header: React.FC = () => {
                   content={item.label}
                   onClick={() => {
                     handleItemAction(item.action);
-                    handleNavClick();
+                    closeMenu();
                   }}
                 />
 
@@ -101,7 +85,7 @@ export const Header: React.FC = () => {
                         <NavItem
                           to={sub.to!}
                           content={sub.label}
-                          onClick={handleNavClick}
+                          onClick={closeMenu}
                         />
                       </li>
                     ))}
@@ -113,9 +97,9 @@ export const Header: React.FC = () => {
         </ul>
 
         <div
-          className={`menu-hamburger ${isBurgerActive ? "active" : ""}`}
+          className={`menu-hamburger ${isMenuOpen ? "active" : ""}`}
           id="burger-menu"
-          onClick={handleClick}
+          onClick={toggleMenu}
         >
           <div className="line"></div>
           <div className="line"></div>
